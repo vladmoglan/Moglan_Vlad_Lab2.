@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Moglan_Vlad_Lab2.Data;
 using Moglan_Vlad_Lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Moglan_Vlad_Lab2.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class BooksController : Controller
     {
         private readonly LibraryContext _context;
@@ -20,12 +22,14 @@ namespace Moglan_Vlad_Lab2.Controllers
         }
 
         // GET: Books
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Books.ToListAsync());
         }
 
         // GET: Books/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
